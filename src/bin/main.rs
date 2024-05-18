@@ -3,6 +3,7 @@ fn main() {}
 #[cfg(test)]
 mod tests {
     use er_save_file_readers::models::save_slot::checksum::Checksum;
+    use er_save_file_readers::models::save_slot::save_slot::SaveSlot;
     use er_save_file_readers::traits::binary_readable::BinaryReadable;
     use std::fs::File;
     use std::io::{self, BufReader};
@@ -11,6 +12,12 @@ mod tests {
         let file = File::open(path)?;
         let mut reader = BufReader::new(file);
         Checksum::read(&mut reader)
+    }
+
+    fn read_save_slot_from_file<T: BinaryReadable>(path: &str) -> io::Result<SaveSlot> {
+        let file = File::open(path)?;
+        let mut reader = BufReader::new(file);
+        SaveSlot::read(&mut reader)
     }
 
     #[test]
@@ -25,5 +32,15 @@ mod tests {
         for (index, &val) in checksum_data.data.iter().enumerate() {
             assert_eq!(val, expected_checksum[index])
         }
+    }
+    
+    #[test]
+    fn test_read_save_slot() {
+        let save_slot_data =
+        read_save_slot_from_file::<SaveSlot>("testdata/vagabond/save_slots/0.sl2")
+                .expect("data should be present");
+        println!("{:?}", save_slot_data);
+
+        assert_eq!(save_slot_data.checksum.data[0], 10)
     }
 }

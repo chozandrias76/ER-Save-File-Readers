@@ -20,11 +20,11 @@ impl Default for Checksum {
 
 impl fmt::Debug for Checksum {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Checksum(\n\t")?;
+        write!(f, "Checksum(\n")?;
         for byte in &self.data {
             write!(f, "{:02X}\u{2008}", byte)?;
         }
-        write!(f, "\n)")
+        write!(f, ")")
     }
 }
 
