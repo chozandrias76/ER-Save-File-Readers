@@ -1,7 +1,10 @@
 {
   "cSpell.words": [
     "bindgen",
+    "byteorder",
     "cdylib",
-    "rlib"
+    "rlib",
+    "serde",
+    "testdata"
   ]
 }
