@@ -47,7 +47,7 @@ jobs:
           name: wasm-artifacts
 
       - name: List downloaded artifacts
-        run: ls -R ./rust-wasm
+        run: ls -R ./
 
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
