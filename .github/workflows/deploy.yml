@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: wasm-artifacts
-          path: rust/er-save-file-readers/pkg/
+          path: pkg/
 
   deploy:
     runs-on: ubuntu-latest
