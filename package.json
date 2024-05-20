@@ -2,8 +2,7 @@
   "name": "rust-wasm-project",
   "version": "1.0.0",
   "scripts": {
-    "build": "wasm-pack build --target web",
-    "vercel-build": "npm run build"
+    "build": "wasm-pack build --target web"
   },
   "dependencies": {},
   "devDependencies": {

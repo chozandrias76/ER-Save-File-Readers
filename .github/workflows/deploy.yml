@@ -1,7 +1,4 @@
-name: Vercel Main Deployment
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+name: Build and Upload WASM to S3
 
 on:
   push:
@@ -9,7 +6,7 @@ on:
       - main
 
 jobs:
-  Deploy-Preview:
+  build-and-upload:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,30 +26,15 @@ jobs:
         run: npm install
 
       - name: Build with wasm-pack
-        run: npm run vercel-build
+        run: npm run build
 
-      - name: Upload WASM artifacts
-        uses: actions/upload-artifact@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          name: wasm-artifacts
-          path: pkg/
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Download WASM artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: wasm-artifacts
-
-      - name: List downloaded artifacts
-        run: ls -R ./
-
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --yes --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Upload to S3
+        run: |
+          aws s3 sync pkg/ s3://swensonhcp-resume-website/wasm/
