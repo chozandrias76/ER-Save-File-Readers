@@ -5,7 +5,7 @@ use std::{
 
 use crate::traits::binary_readable::BinaryReadable;
 
-#[derive(serde::Deserialize, serde::Serialize)]
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct Checksum {
     pub data: [u8; 0x10],
 }

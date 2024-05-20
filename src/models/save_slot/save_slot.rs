@@ -1,15 +1,23 @@
 use std::{
     fmt,
-    io::{self, Read, Seek},
+    io::{self, Read, Seek}, mem,
 };
 
 use crate::traits::binary_readable::BinaryReadable;
 
 use super::checksum::Checksum;
 
-#[derive(serde::Deserialize, serde::Serialize)]
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct SaveSlot {
     pub checksum: Checksum,
+}
+
+impl SaveSlot {
+  pub fn length(&self) -> usize { 
+    // let base_size = mem::size_of::<Checksum>();
+
+    2621456// - base_size
+  }
 }
 
 impl Default for SaveSlot {
