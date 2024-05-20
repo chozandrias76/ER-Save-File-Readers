@@ -1,20 +1,19 @@
-name: Build and Deploy Rust WASM
+name: Vercel Main Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build:
+  Deploy-Preview:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -36,23 +35,22 @@ jobs:
           name: wasm-artifacts
           path: pkg/
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Download WASM artifacts
         uses: actions/download-artifact@v2
         with:
           name: wasm-artifacts
 
-      # Add your deployment steps here
-      # This can be deploying to Vercel, Netlify, or any other service
-      - name: Deploy to Vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          npm install -g vercel
-          vercel --prod --confirm
+      - name: List downloaded artifacts
+        run: ls -R ./rust-wasm
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --yes --token=${{ secrets.VERCEL_TOKEN }}
