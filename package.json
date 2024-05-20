@@ -1,0 +1,12 @@
+{
+  "name": "rust-wasm-project",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "wasm-pack build --target web",
+    "start": "echo 'Custom start command if needed'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "wasm-pack": "^0.10.2"
+  }
+}
