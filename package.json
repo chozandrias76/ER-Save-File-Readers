@@ -2,7 +2,7 @@
   "name": "rust-wasm-project",
   "version": "1.0.0",
   "scripts": {
-    "build": "wasm-pack build --target web",
+    "build": "wasm-pack build --target web && mkdir -p public && cp -r pkg/* public/",
     "start": "echo 'Custom start command if needed'"
   },
   "dependencies": {},
