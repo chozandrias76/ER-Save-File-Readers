@@ -25,8 +25,11 @@ jobs:
         run: |
           curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Build with wasm-pack
-        run: npm run build
+        run: npm run vercel-build
 
       - name: Upload WASM artifacts
         uses: actions/upload-artifact@v2
