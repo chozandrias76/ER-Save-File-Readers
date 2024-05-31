@@ -1,6 +1,6 @@
 use std::{
     fmt,
-    io::{self, Read, Seek}, mem,
+    io::{self, Read, Seek}
 };
 
 use crate::traits::binary_readable::BinaryReadable;
