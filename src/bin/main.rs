@@ -6,6 +6,7 @@ mod tests {
     use er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle;
     use er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle_map::GAItemHandleMap;
     use er_save_file_readers::models::save_slot::map_id::MapID;
+    use er_save_file_readers::models::save_slot::player_game_data::unk::Unk;
     use er_save_file_readers::models::save_slot::save_slot::SaveSlot;
     use er_save_file_readers::models::save_slot::unk01::Unk01;
     use er_save_file_readers::models::save_slot::unk_24_bytes::Unk24Bytes;
@@ -29,6 +30,10 @@ mod tests {
     }
 
     fn read_unk01_from_file(path: &str) -> io::Result<Unk01> {
+        read_from_file(path)
+    }
+
+    fn read_unk_from_file(path: &str) -> io::Result<Unk> {
         read_from_file(path)
     }
 
@@ -150,5 +155,17 @@ mod tests {
                 )
             }
         }
+    }
+
+    #[test]
+    fn test_read_save_slot_player_game_data_unk_bytes() {
+        let unk_bytes = read_unk_from_file(
+            "testdata/vagabond/save_slots/0/player_game_data/unk.sl2",
+        )
+        .expect("data should be present");
+        assert_eq!(
+            unk_bytes.data,
+            0xFFFFFFFFu32 as i32
+        )
     }
 }
