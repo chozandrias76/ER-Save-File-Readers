@@ -7,6 +7,8 @@ mod tests {
     use er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle_map::GAItemHandleMap;
     use er_save_file_readers::models::save_slot::map_id::MapID;
     use er_save_file_readers::models::save_slot::player_game_data::health::Health;
+    use er_save_file_readers::models::save_slot::player_game_data::max_base_health::MaxBaseHealth;
+    use er_save_file_readers::models::save_slot::player_game_data::max_health::MaxHealth;
     use er_save_file_readers::models::save_slot::player_game_data::unk::Unk;
     use er_save_file_readers::models::save_slot::player_game_data::unk1::Unk1;
     use er_save_file_readers::models::save_slot::save_slot::SaveSlot;
@@ -47,6 +49,12 @@ mod tests {
         read_from_file(path)
     }
     fn read_health_from_file(path: &str) -> io::Result<Health> {
+        read_from_file(path)
+    }
+    fn read_max_health_from_file(path: &str) -> io::Result<MaxHealth> {
+        read_from_file(path)
+    }
+    fn read_max_base_health_from_file(path: &str) -> io::Result<MaxBaseHealth> {
         read_from_file(path)
     }
 
@@ -194,6 +202,30 @@ mod tests {
     fn test_read_save_slot_player_game_data_health_bytes() {
         let bytes = read_health_from_file(
             "testdata/vagabond/save_slots/0/player_game_data/health.sl2",
+        )
+        .expect("data should be present");
+        assert_eq!(
+            bytes.data,
+            0x20A
+        )
+    }
+
+    #[test]
+    fn test_read_save_slot_player_game_data_max_health_bytes() {
+        let bytes = read_max_health_from_file(
+            "testdata/vagabond/save_slots/0/player_game_data/max_health.sl2",
+        )
+        .expect("data should be present");
+        assert_eq!(
+            bytes.data,
+            0x20A
+        )
+    }
+
+    #[test]
+    fn test_read_save_slot_player_game_data_max_base_health_bytes() {
+        let bytes = read_max_base_health_from_file(
+            "testdata/vagabond/save_slots/0/player_game_data/max_base_health.sl2",
         )
         .expect("data should be present");
         assert_eq!(
