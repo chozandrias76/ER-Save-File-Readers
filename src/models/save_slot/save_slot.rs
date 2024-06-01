@@ -1,29 +1,38 @@
 use std::{
     fmt,
-    io::{self, Read, Seek}
+    io::{self, Read, Seek},
 };
 
-use crate::traits::binary_readable::BinaryReadable;
+use crate::{
+    models::shared::byte_array_reader::ByteArray, traits::binary_readable::BinaryReadable,
+};
 
-use super::checksum::Checksum;
+use super::{checksum::Checksum, unk_24_bytes::Unk24Bytes};
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct SaveSlot {
     pub checksum: Checksum,
+    pub unk0x16: Unk24Bytes,
 }
 
 impl SaveSlot {
-  pub fn length(&self) -> usize { 
-    // let base_size = mem::size_of::<Checksum>();
+    pub fn length(&self) -> usize {
+        // let base_size = mem::size_of::<Checksum>();
 
-    2621456// - base_size
-  }
+        2621456 // - base_size
+    }
 }
 
 impl Default for SaveSlot {
     fn default() -> Self {
         Self {
             checksum: Default::default(),
+            unk0x16: Unk24Bytes {
+                data: ByteArray {
+                    data: vec![0u8; 0x18],
+                    length: 24,
+                },
+            },
         }
     }
 }
@@ -42,10 +51,9 @@ impl BinaryReadable for SaveSlot {
         reader
             .read_exact(checksum_data)
             .expect("checksum_data should be present");
-        Ok(Self {
-            checksum: Checksum {
-                data: *checksum_data,
-            },
-        })
+        let mut instance = Self::default();
+        instance.checksum.data = *checksum_data;
+
+        Ok(instance)
     }
 }
