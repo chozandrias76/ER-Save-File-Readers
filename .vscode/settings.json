@@ -3,6 +3,7 @@
     "bindgen",
     "byteorder",
     "cdylib",
+    "gaitem",
     "rlib",
     "serde",
     "testdata"

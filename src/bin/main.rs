@@ -3,6 +3,8 @@ fn main() {}
 #[cfg(test)]
 mod tests {
     use er_save_file_readers::models::save_slot::checksum::Checksum;
+    use er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle;
+    use er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle_map::GAItemHandleMap;
     use er_save_file_readers::models::save_slot::map_id::MapID;
     use er_save_file_readers::models::save_slot::save_slot::SaveSlot;
     use er_save_file_readers::models::save_slot::unk01::Unk01;
@@ -31,6 +33,10 @@ mod tests {
     }
 
     fn read_map_id_from_file(path: &str) -> io::Result<MapID> {
+        read_from_file(path)
+    }
+
+    fn read_gaitem_handle_map_from_file(path: &str) -> io::Result<GAItemHandleMap> {
         read_from_file(path)
     }
 
@@ -93,5 +99,56 @@ mod tests {
                 0xba, 0x79, 0xba, 0x99, 0xa9, 0x17, 0x53, 0x68, 0x01, 0x37
             ]
         )
+    }
+
+    #[test]
+    fn test_read_save_slot_ga_item_handle_map_bytes() {
+        let gaitem_handle_map: GAItemHandleMap = read_gaitem_handle_map_from_file(
+            "testdata/vagabond/save_slots/0/gaitem_handle_map.sl2",
+        )
+        .expect("data should be present");
+        for idx in 0..gaitem_handle_map.gaitem_handles.len() {
+            if idx < 397 {
+                assert_eq!(
+                    gaitem_handle_map.gaitem_handles[idx],
+                    GAItemHandle {
+                        ga_item_handle: 0x00000000,
+                        item_id: 0xFFFFFFFFu32 as i32
+                    },
+                    "Failed at index {}",
+                    idx
+                )
+            } else if idx < 400 && idx > 399 {
+                assert_eq!(
+                    gaitem_handle_map.gaitem_handles[idx],
+                    GAItemHandle {
+                        ga_item_handle: 0x00000000,
+                        item_id: 0x00000000
+                    },
+                    "Failed at index {}",
+                    idx
+                )
+            } else if idx > 400 && idx < 419 {
+                assert_eq!(
+                    gaitem_handle_map.gaitem_handles[idx],
+                    GAItemHandle {
+                        ga_item_handle: 0x00000000,
+                        item_id: 0xFFFFFFFFu32 as i32
+                    },
+                    "Failed at index {}",
+                    idx
+                )
+            } else if idx > 419 && idx < 421 {
+                assert_eq!(
+                    gaitem_handle_map.gaitem_handles[idx],
+                    GAItemHandle {
+                        ga_item_handle: 0x00000000,
+                        item_id: 0x00000000
+                    },
+                    "Failed at index {}",
+                    idx
+                )
+            }
+        }
     }
 }
