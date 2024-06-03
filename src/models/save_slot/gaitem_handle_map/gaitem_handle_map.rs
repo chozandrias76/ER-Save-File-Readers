@@ -26,6 +26,6 @@ impl BinaryReadable for GAItemHandleMap {
 
 impl Validate for GAItemHandleMap {
     fn validate(&self) -> bool {
-        true
+        self.gaitem_handles.iter().all(|f| f.validate())
     }
 }

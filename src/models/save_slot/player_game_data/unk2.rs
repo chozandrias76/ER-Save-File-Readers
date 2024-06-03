@@ -48,6 +48,6 @@ impl BinaryReadable for Unk2 {
 
 impl Validate for Unk2 {
     fn validate(&self) -> bool {
-        true
+        self.inner.validate()
     }
 }

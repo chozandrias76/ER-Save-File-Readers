@@ -1,6 +1,6 @@
 use std::io::{self, Read, Seek};
 
-use crate::traits::binary_readable::BinaryReadable;
+use crate::traits::{binary_readable::BinaryReadable, validate::Validate};
 
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize, PartialEq)]
 pub struct GAItemHandle {
@@ -34,5 +34,11 @@ impl BinaryReadable for GAItemHandle {
             ga_item_handle,
             item_id,
         })
+    }
+}
+
+impl Validate for GAItemHandle {
+    fn validate(&self) -> bool {
+        self.ga_item_handle.to_le_bytes().len() == 4 && self.item_id.to_le_bytes().len() == 4
     }
 }

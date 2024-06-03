@@ -4,7 +4,8 @@ use std::{
 };
 
 use crate::{
-    models::shared::byte_array_reader::ByteArray, traits::{binary_readable::BinaryReadable, validate::Validate},
+    models::shared::byte_array_reader::ByteArray,
+    traits::{binary_readable::BinaryReadable, validate::Validate},
 };
 
 use super::{checksum::Checksum, unk_24_bytes::Unk24Bytes};

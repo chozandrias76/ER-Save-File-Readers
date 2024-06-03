@@ -3,7 +3,7 @@ use std::{
     io::{self, Read, Seek},
 };
 
-use crate::traits::binary_readable::BinaryReadable;
+use crate::traits::{binary_readable::BinaryReadable, validate::Validate};
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct I32Reader {
@@ -37,5 +37,11 @@ impl BinaryReadable for I32Reader {
         Ok(I32Reader {
             data: i32::from_le_bytes(*mutable_default), // Convert the [u8] slice to i32
         })
+    }
+}
+
+impl Validate for I32Reader {
+    fn validate(&self) -> bool {
+        self.data.to_le_bytes().len() == 4
     }
 }

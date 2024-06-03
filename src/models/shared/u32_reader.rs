@@ -3,7 +3,7 @@ use std::{
     io::{self, Read, Seek},
 };
 
-use crate::traits::binary_readable::BinaryReadable;
+use crate::traits::{binary_readable::BinaryReadable, validate::Validate};
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct U32Reader {
@@ -37,5 +37,11 @@ impl BinaryReadable for U32Reader {
         Ok(U32Reader {
             data: u32::from_le_bytes(*mutable_default), // Convert the [u8] slice to u32
         })
+    }
+}
+
+impl Validate for U32Reader {
+    fn validate(&self) -> bool {
+        self.data.to_le_bytes().len() == 4
     }
 }

@@ -4,7 +4,10 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use crate::{models::shared::u32_reader::U32Reader, traits::{binary_readable::BinaryReadable, validate::Validate}};
+use crate::{
+    models::shared::u32_reader::U32Reader,
+    traits::{binary_readable::BinaryReadable, validate::Validate},
+};
 
 #[derive(serde::Deserialize, serde::Serialize, Clone, Default)]
 pub struct MapID {
@@ -45,6 +48,6 @@ impl BinaryReadable for MapID {
 
 impl Validate for MapID {
     fn validate(&self) -> bool {
-        true
+        self.inner.validate()
     }
 }
