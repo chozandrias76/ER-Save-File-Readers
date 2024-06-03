@@ -82,6 +82,10 @@ mod tests {
         Unk24Bytes::read(&mut reader)
     }
 
+    fn read_unk2_from_file(path: &str) -> io::Result<Unk1> {
+        read_from_file(path)
+    }
+
     #[test]
     fn test_read_save_slot_checksum() {
         let expected_checksum = vec![
@@ -252,5 +256,14 @@ mod tests {
         )
         .expect("data should be present");
         assert_eq!(bytes.data, 0x4E)
+    }
+
+    #[test]
+    fn test_read_save_slot_player_game_data_unk2_bytes() {
+        let bytes = read_unk2_from_file(
+            "testdata/vagabond/save_slots/0/player_game_data/unk2.sl2",
+        )
+        .expect("data should be present");
+        assert_eq!(bytes.data, 0x0)
     }
 }
