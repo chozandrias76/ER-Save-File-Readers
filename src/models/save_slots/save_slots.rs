@@ -19,9 +19,11 @@ impl BinaryReadable for SaveSlots {
     fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
         let save_slot_data = Self::default();
         let save_slot0 = SaveSlot::read(reader)?;
-        reader.seek(io::SeekFrom::Current(
-            save_slot0.length().try_into().unwrap(),
-        )).expect("OK");
+        reader
+            .seek(io::SeekFrom::Current(
+                save_slot0.length().try_into().unwrap(),
+            ))
+            .expect("OK");
         Ok(save_slot_data)
     }
 }

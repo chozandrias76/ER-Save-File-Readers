@@ -1,4 +1,8 @@
-use std::{fmt, io::{self, Read, Seek}, ops::{Deref, DerefMut}};
+use std::{
+    fmt,
+    io::{self, Read, Seek},
+    ops::{Deref, DerefMut},
+};
 
 use crate::{models::shared::u32_reader::U32Reader, traits::binary_readable::BinaryReadable};
 
