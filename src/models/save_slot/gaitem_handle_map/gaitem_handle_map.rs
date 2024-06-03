@@ -1,6 +1,6 @@
 use std::io::{self, Read, Seek};
 
-use crate::traits::binary_readable::BinaryReadable;
+use crate::traits::{binary_readable::BinaryReadable, validate::Validate};
 
 use super::gaitem_handle::GAItemHandle;
 
@@ -21,5 +21,11 @@ impl BinaryReadable for GAItemHandleMap {
         }
 
         Ok(GAItemHandleMap { gaitem_handles })
+    }
+}
+
+impl Validate for GAItemHandleMap {
+    fn validate(&self) -> bool {
+        true
     }
 }

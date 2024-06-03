@@ -4,7 +4,7 @@ use std::{
 };
 
 use crate::{
-    models::shared::byte_array_reader::ByteArray, traits::binary_readable::BinaryReadable,
+    models::shared::byte_array_reader::ByteArray, traits::{binary_readable::BinaryReadable, validate::Validate},
 };
 
 use super::{checksum::Checksum, unk_24_bytes::Unk24Bytes};
@@ -55,5 +55,11 @@ impl BinaryReadable for SaveSlot {
         instance.checksum.data = *checksum_data;
 
         Ok(instance)
+    }
+}
+
+impl Validate for SaveSlot {
+    fn validate(&self) -> bool {
+        self.length() == 2621456
     }
 }

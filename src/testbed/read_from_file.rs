@@ -1,15 +1,27 @@
 mod read_from_file {
-    use crate::traits::binary_readable::BinaryReadable;
+    use crate::traits::{binary_readable::BinaryReadable, validate::Validate};
     use std::{
         fs::File,
         io::{self, BufReader},
     };
 
-    fn read_from_file<T: BinaryReadable>(path: &str) -> io::Result<T> {
+    fn read_from_file<T: BinaryReadable + Validate>(path: &str) -> io::Result<T> {
+        if !path.ends_with(".sl2") {
+            panic!("Invalid file format: expected a file ending with .sl2");
+        }
+
         let file = File::open(path)?;
         let mut reader = BufReader::new(file);
-        T::read(&mut reader)
+        let result = T::read(&mut reader);
+        match result {
+            Ok(data) => {
+                assert_eq!(data.validate(), true);
+                Ok(data)
+            },
+            Err(e) => Err(e),
+        }
     }
+
     mod save_slot {
         use std::{
             fs::File,

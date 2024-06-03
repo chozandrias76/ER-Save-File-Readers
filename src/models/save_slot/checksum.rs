@@ -4,6 +4,7 @@ use std::{
 };
 
 use crate::traits::binary_readable::BinaryReadable;
+use crate::traits::validate::Validate;
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct Checksum {
@@ -37,5 +38,11 @@ impl BinaryReadable for Checksum {
         Ok(Checksum {
             data: *mutable_default,
         })
+    }
+}
+
+impl Validate for Checksum {
+    fn validate(&self) -> bool {
+        self.data.iter().len() == 0x10
     }
 }

@@ -4,7 +4,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use crate::{models::shared::i32_reader::I32Reader, traits::binary_readable::BinaryReadable};
+use crate::{models::shared::i32_reader::I32Reader, traits::{binary_readable::BinaryReadable, validate::Validate}};
 
 #[derive(serde::Deserialize, serde::Serialize, Clone, Default)]
 pub struct Health {
@@ -40,5 +40,12 @@ impl BinaryReadable for Health {
         Ok(Health {
             inner: I32Reader::read(reader)?,
         })
+    }
+}
+
+
+impl Validate for Health {
+    fn validate(&self) -> bool {
+        true
     }
 }

@@ -4,7 +4,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use crate::{models::shared::i32_reader::I32Reader, traits::binary_readable::BinaryReadable};
+use crate::{models::shared::i32_reader::I32Reader, traits::{binary_readable::BinaryReadable, validate::Validate}};
 
 #[derive(serde::Deserialize, serde::Serialize, Clone, Default)]
 pub struct BaseMaxFP {
@@ -40,5 +40,11 @@ impl BinaryReadable for BaseMaxFP {
         Ok(BaseMaxFP {
             inner: I32Reader::read(reader)?,
         })
+    }
+}
+
+impl Validate for BaseMaxFP {
+    fn validate(&self) -> bool {
+        true
     }
 }

@@ -4,7 +4,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use crate::{models::shared::i32_reader::I32Reader, traits::binary_readable::BinaryReadable};
+use crate::{models::shared::i32_reader::I32Reader, traits::{binary_readable::BinaryReadable, validate::Validate}};
 
 #[derive(serde::Deserialize, serde::Serialize, Clone, Default)]
 pub struct FP {
@@ -40,5 +40,11 @@ impl BinaryReadable for FP {
         Ok(FP {
             inner: I32Reader::read(reader)?,
         })
+    }
+}
+
+impl Validate for FP {
+    fn validate(&self) -> bool {
+        true
     }
 }
