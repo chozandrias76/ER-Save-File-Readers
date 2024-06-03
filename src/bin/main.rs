@@ -6,8 +6,11 @@ mod tests {
     use er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle;
     use er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle_map::GAItemHandleMap;
     use er_save_file_readers::models::save_slot::map_id::MapID;
+    use er_save_file_readers::models::save_slot::player_game_data::base_max_fp::BaseMaxFP;
+    use er_save_file_readers::models::save_slot::player_game_data::fp::FP;
     use er_save_file_readers::models::save_slot::player_game_data::health::Health;
     use er_save_file_readers::models::save_slot::player_game_data::max_base_health::MaxBaseHealth;
+    use er_save_file_readers::models::save_slot::player_game_data::max_fp::MaxFP;
     use er_save_file_readers::models::save_slot::player_game_data::max_health::MaxHealth;
     use er_save_file_readers::models::save_slot::player_game_data::unk::Unk;
     use er_save_file_readers::models::save_slot::player_game_data::unk1::Unk1;
@@ -48,6 +51,7 @@ mod tests {
     fn read_unk1_from_file(path: &str) -> io::Result<Unk1> {
         read_from_file(path)
     }
+
     fn read_health_from_file(path: &str) -> io::Result<Health> {
         read_from_file(path)
     }
@@ -55,6 +59,16 @@ mod tests {
         read_from_file(path)
     }
     fn read_max_base_health_from_file(path: &str) -> io::Result<MaxBaseHealth> {
+        read_from_file(path)
+    }
+
+    fn read_fp_from_file(path: &str) -> io::Result<FP> {
+        read_from_file(path)
+    }
+    fn read_max_fp_from_file(path: &str) -> io::Result<MaxFP> {
+        read_from_file(path)
+    }
+    fn read_max_base_fp_from_file(path: &str) -> io::Result<BaseMaxFP> {
         read_from_file(path)
     }
 
@@ -176,38 +190,26 @@ mod tests {
 
     #[test]
     fn test_read_save_slot_player_game_data_unk_bytes() {
-        let unk_bytes = read_unk_from_file(
-            "testdata/vagabond/save_slots/0/player_game_data/unk.sl2",
-        )
-        .expect("data should be present");
-        assert_eq!(
-            unk_bytes.data,
-            0xFFFFFFFFu32 as i32
-        )
+        let unk_bytes =
+            read_unk_from_file("testdata/vagabond/save_slots/0/player_game_data/unk.sl2")
+                .expect("data should be present");
+        assert_eq!(unk_bytes.data, 0xFFFFFFFFu32 as i32)
     }
 
     #[test]
     fn test_read_save_slot_player_game_data_unk1_bytes() {
-        let unk1_bytes = read_unk1_from_file(
-            "testdata/vagabond/save_slots/0/player_game_data/unk1.sl2",
-        )
-        .expect("data should be present");
-        assert_eq!(
-            unk1_bytes.data,
-            0x0i32
-        )
+        let unk1_bytes =
+            read_unk1_from_file("testdata/vagabond/save_slots/0/player_game_data/unk1.sl2")
+                .expect("data should be present");
+        assert_eq!(unk1_bytes.data, 0x0i32)
     }
 
     #[test]
     fn test_read_save_slot_player_game_data_health_bytes() {
-        let bytes = read_health_from_file(
-            "testdata/vagabond/save_slots/0/player_game_data/health.sl2",
-        )
-        .expect("data should be present");
-        assert_eq!(
-            bytes.data,
-            0x20A
-        )
+        let bytes =
+            read_health_from_file("testdata/vagabond/save_slots/0/player_game_data/health.sl2")
+                .expect("data should be present");
+        assert_eq!(bytes.data, 0x20A)
     }
 
     #[test]
@@ -216,10 +218,7 @@ mod tests {
             "testdata/vagabond/save_slots/0/player_game_data/max_health.sl2",
         )
         .expect("data should be present");
-        assert_eq!(
-            bytes.data,
-            0x20A
-        )
+        assert_eq!(bytes.data, 0x20A)
     }
 
     #[test]
@@ -228,9 +227,30 @@ mod tests {
             "testdata/vagabond/save_slots/0/player_game_data/max_base_health.sl2",
         )
         .expect("data should be present");
-        assert_eq!(
-            bytes.data,
-            0x20A
+        assert_eq!(bytes.data, 0x20A)
+    }
+
+    #[test]
+    fn test_read_save_slot_player_game_data_fp_bytes() {
+        let bytes = read_fp_from_file("testdata/vagabond/save_slots/0/player_game_data/fp.sl2")
+            .expect("data should be present");
+        assert_eq!(bytes.data, 0x4E)
+    }
+
+    #[test]
+    fn test_read_save_slot_player_game_data_max_fp_bytes() {
+        let bytes =
+            read_max_fp_from_file("testdata/vagabond/save_slots/0/player_game_data/max_fp.sl2")
+                .expect("data should be present");
+        assert_eq!(bytes.data, 0x4E)
+    }
+
+    #[test]
+    fn test_read_save_slot_player_game_data_max_base_fp_bytes() {
+        let bytes = read_max_base_fp_from_file(
+            "testdata/vagabond/save_slots/0/player_game_data/base_max_fp.sl2",
         )
+        .expect("data should be present");
+        assert_eq!(bytes.data, 0x4E)
     }
 }
