@@ -1,6 +1,6 @@
 pub mod traits;
 pub mod models;
-pub mod testbed;
+mod testbed;
 
 use models::save_slot::checksum::Checksum;
 use traits::binary_readable::BinaryReadable;
