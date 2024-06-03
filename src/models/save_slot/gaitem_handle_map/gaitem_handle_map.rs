@@ -7,6 +7,7 @@ use super::gaitem_handle::GAItemHandle;
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
 pub struct GAItemHandleMap {
     pub gaitem_handles: Vec<GAItemHandle>,
+    length: usize,
 }
 
 impl BinaryReadable for GAItemHandleMap {
@@ -20,12 +21,13 @@ impl BinaryReadable for GAItemHandleMap {
             gaitem_handles.push(handle);
         }
 
-        Ok(GAItemHandleMap { gaitem_handles })
+        Ok(GAItemHandleMap { gaitem_handles, length })
     }
 }
 
 impl Validate for GAItemHandleMap {
     fn validate(&self) -> bool {
-        self.gaitem_handles.iter().all(|f| f.validate())
+        self.gaitem_handles.iter().all(|f| f.validate()) &&
+        self.gaitem_handles.len() == self.length
     }
 }
