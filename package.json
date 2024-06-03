@@ -2,7 +2,6 @@
   "name": "rust-wasm-project",
   "version": "1.0.0",
   "scripts": {
-    "prebuild": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && npm install -g wasm-pack",
     "build": "wasm-pack build --target web"
   },
   "dependencies": {},
