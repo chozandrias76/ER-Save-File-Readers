@@ -40,10 +40,6 @@ mod tests {
         read_from_file(path)
     }
 
-    fn read_unk_from_file(path: &str) -> io::Result<Unk> {
-        read_from_file(path)
-    }
-
     fn read_map_id_from_file(path: &str) -> io::Result<MapID> {
         read_from_file(path)
     }
@@ -194,9 +190,7 @@ mod tests {
 
     #[test]
     fn test_read_save_slot_player_game_data_unk_bytes() {
-        let unk_bytes =
-            read_unk_from_file("testdata/vagabond/save_slots/0/player_game_data/unk.sl2")
-                .expect("data should be present");
+        let unk_bytes = Unk::read_from_file("testdata/vagabond/save_slots/0/player_game_data/unk.sl2")                .expect("data should be present");
         assert_eq!(unk_bytes.data, 0xFFFFFFFFu32 as i32)
     }
 
