@@ -1,4 +1,4 @@
-use std::io::{self, Read, Seek};
+use std::{fmt, io::{self, Read, Seek}};
 
 use crate::traits::validate::Validate;
 
@@ -8,7 +8,7 @@ pub trait ByteArrayReader {
         Self: Sized;
 }
 
-#[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, serde::Deserialize, serde::Serialize)]
 pub struct ByteArray {
     pub data: Vec<u8>,
     pub length: usize,
@@ -25,5 +25,15 @@ impl ByteArrayReader for ByteArray {
 impl Validate for ByteArray {
     fn validate(&self) -> bool {
         self.data.len() == self.length
+    }
+}
+
+impl fmt::Debug for ByteArray {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "ByteArray(\n")?;
+        for byte in &self.data {
+            write!(f, "{:02X}\u{2008}", byte)?;
+        }
+        write!(f, ")")
     }
 }

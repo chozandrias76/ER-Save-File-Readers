@@ -30,6 +30,106 @@ mod read_from_file {
 
         use crate::traits::validate::Validate;
 
+        impl crate::models::save_slot::face_data::unk_288_bytes::Unk288Bytes {
+            pub fn read_from_file(path: &str) -> io::Result<Self> {
+                let file = File::open(path)?;
+                let mut reader = BufReader::new(file);
+                let result = Self::read(&mut reader);
+                match result {
+                    Ok(data) => {
+                        assert_eq!(data.validate(), true, "Data validation failed");
+                        Ok(data)
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+        }
+
+        impl crate::models::save_slot::face_data::unk_bool::UnkBool {
+            pub fn read_from_file(path: &str) -> io::Result<Self> {
+                use crate::traits::binary_readable::BinaryReadable;
+
+                let file = File::open(path)?;
+                let mut reader = BufReader::new(file);
+                let result = Self::read(&mut reader);
+                match result {
+                    Ok(data) => {
+                        assert_eq!(data.validate(), true, "Data validation failed");
+                        Ok(data)
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+        }
+
+        impl crate::models::save_slot::face_data::unk_i16::UnkI16 {
+            pub fn read_from_file(path: &str) -> io::Result<Self> {
+                use crate::traits::binary_readable::BinaryReadable;
+
+                let file = File::open(path)?;
+                let mut reader = BufReader::new(file);
+                let result = Self::read(&mut reader);
+                match result {
+                    Ok(data) => {
+                        assert_eq!(data.validate(), true, "Data validation failed");
+                        Ok(data)
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+        }
+
+        impl crate::models::save_slot::face_data::unk_i32::UnkI32 {
+            pub fn read_from_file(path: &str) -> io::Result<Self> {
+                use crate::traits::binary_readable::BinaryReadable;
+
+                let file = File::open(path)?;
+                let mut reader = BufReader::new(file);
+                let result = Self::read(&mut reader);
+                match result {
+                    Ok(data) => {
+                        assert_eq!(data.validate(), true, "Data validation failed");
+                        Ok(data)
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+        }
+
+        impl crate::models::save_slot::face_data::unk_i64::UnkI64 {
+            pub fn read_from_file(path: &str) -> io::Result<Self> {
+                use crate::traits::binary_readable::BinaryReadable;
+
+                let file = File::open(path)?;
+                let mut reader = BufReader::new(file);
+                let result = Self::read(&mut reader);
+                match result {
+                    Ok(data) => {
+                        assert_eq!(data.validate(), true, "Data validation failed");
+                        Ok(data)
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+        }
+
+        impl crate::models::save_slot::face_data::face_data::FaceData {
+            pub fn read_from_file(path: &str) -> io::Result<Self> {
+                use crate::traits::binary_readable::BinaryReadable;
+    
+                let file = File::open(path)?;
+                let mut reader = BufReader::new(file);
+                let result = Self::read(&mut reader);
+                match result {
+                    Ok(data) => {
+                        assert_eq!(data.validate(), true, "Data validation failed");
+                        Ok(data)
+                    }
+                    Err(e) => Err(e),
+                }
+            }
+        }
+
         impl crate::models::save_slot::checksum::Checksum {
             pub fn read_from_file(path: &str) -> io::Result<Self> {
                 let result =
