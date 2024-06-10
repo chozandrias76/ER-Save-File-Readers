@@ -14,6 +14,15 @@ pub struct ByteArray {
     pub length: usize,
 }
 
+impl Default for ByteArray {
+    fn default() -> Self {
+        ByteArray {
+            data: Vec::new(),
+            length: 0,
+        }
+    }
+}
+
 impl ByteArrayReader for ByteArray {
     fn read<R: Read + Seek>(reader: &mut R, length: usize) -> io::Result<Self> {
         let mut data = vec![0u8; length];

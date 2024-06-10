@@ -13,7 +13,7 @@ pub struct I32Reader {
 impl Default for I32Reader {
     fn default() -> Self {
         Self {
-            data: Default::default(),
+            data: i32::default(),
         }
     }
 }
@@ -30,12 +30,12 @@ impl fmt::Debug for I32Reader {
 
 impl BinaryReadable for I32Reader {
     fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-        let mutable_default = &mut [0u8; 4]; // Change the type from [i8; 4] to [u8; 4]
+        let mutable_default = &mut Self::default().data.to_le_bytes();
         reader
             .read_exact(mutable_default)
             .expect("data should be present");
         Ok(I32Reader {
-            data: i32::from_le_bytes(*mutable_default), // Convert the [u8] slice to i32
+            data: i32::from_le_bytes(*mutable_default),
         })
     }
 }

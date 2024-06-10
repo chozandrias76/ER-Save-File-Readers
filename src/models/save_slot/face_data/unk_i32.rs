@@ -5,18 +5,18 @@ use std::{
 };
 
 use crate::{
-    models::shared::u32_reader::U32Reader,
+    models::shared::i32_reader::I32Reader,
     traits::{binary_readable::BinaryReadable, validate::Validate},
 };
 
 #[derive(serde::Deserialize, serde::Serialize, Clone, Default)]
 pub struct UnkI32 {
-    inner: U32Reader,
+    inner: I32Reader,
 }
 
 // Implement Deref trait for UnkI32
 impl Deref for UnkI32 {
-    type Target = U32Reader;
+    type Target = I32Reader;
 
     fn deref(&self) -> &Self::Target {
         &self.inner
@@ -30,18 +30,18 @@ impl DerefMut for UnkI32 {
     }
 }
 
-// Implement Debug trait for UnkI32 by forwarding to U32Reader
+// Implement Debug trait for UnkI32 by forwarding to I32Reader
 impl fmt::Debug for UnkI32 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Debug::fmt(&self.inner, f)
     }
 }
 
-// Implement BinaryReadable trait for UnkI32 by forwarding to U32Reader
+// Implement BinaryReadable trait for UnkI32 by forwarding to I32Reader
 impl BinaryReadable for UnkI32 {
     fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
         Ok(UnkI32 {
-            inner: U32Reader::read(reader)?,
+            inner: I32Reader::read(reader)?,
         })
     }
 }

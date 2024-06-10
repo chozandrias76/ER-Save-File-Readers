@@ -25,7 +25,7 @@ mod read_from_file {
     mod save_slot {
         use std::{
             fs::File,
-            io::{self, BufReader},
+            io::{self, BufReader, Read},
         };
 
         use crate::traits::validate::Validate;
@@ -33,6 +33,8 @@ mod read_from_file {
         impl crate::models::save_slot::face_data::unk_288_bytes::Unk288Bytes {
             pub fn read_from_file(path: &str) -> io::Result<Self> {
                 let file = File::open(path)?;
+                let len = file.try_clone()?.take(288).bytes().collect::<Result<Vec<u8>, _>>()?.len();
+                assert_eq!(len, 288, "Invalid file size: expected 288 bytes");
                 let mut reader = BufReader::new(file);
                 let result = Self::read(&mut reader);
                 match result {

@@ -4,3 +4,5 @@ pub mod unk_bool;
 pub mod unk_i16;
 pub mod unk_i64;
 pub mod face_data;
+pub mod attributes;
+pub mod models;
