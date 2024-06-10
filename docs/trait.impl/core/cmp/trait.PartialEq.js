@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"er_save_file_readers":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.78.0/core/cmp/trait.PartialEq.html\" title=\"trait core::cmp::PartialEq\">PartialEq</a> for <a class=\"struct\" href=\"er_save_file_readers/models/save_slot/gaitem_handle_map/gaitem_handle/struct.GAItemHandle.html\" title=\"struct er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle\">GAItemHandle</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
