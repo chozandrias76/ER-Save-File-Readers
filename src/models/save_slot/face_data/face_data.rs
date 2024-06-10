@@ -9,19 +9,21 @@ use crate::{
 };
 
 use super::{
-    attributes::apparent_age::ApparentAge, models::{
+    attributes::apparent_age::ApparentAge, magic_bytes::MagicBytes, models::{
         accessory::Accessory, beard::Beard, decal::Decal, eye::Eye, eyebrow::Eyebrow,
         eyelash::Eyelash, face::Face, hair::Hair,
     }
 };
 
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct FaceData {
     pub data: ByteArray,
 }
 
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct FaceDatum {
     pub datum: (
-        [u8; 16],
+        MagicBytes,
         Face,
         Hair,
         Eye,

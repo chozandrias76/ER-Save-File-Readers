@@ -6,6 +6,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct ApparentAge {
     pub attribute: Attribute,
 }

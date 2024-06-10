@@ -6,3 +6,4 @@ pub mod unk_i64;
 pub mod face_data;
 pub mod models;
 pub mod attributes;
+pub mod magic_bytes;

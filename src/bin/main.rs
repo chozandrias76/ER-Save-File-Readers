@@ -90,6 +90,7 @@ mod tests {
                 unimplemented7::Unimplemented7, unimplemented8::Unimplemented8,
                 unimplemented9::Unimplemented9, vert_face_ratio::VertFaceRatio,
             },
+            magic_bytes::MagicBytes,
             models::{
                 accessory::Accessory, beard::Beard, decal::Decal, eye::Eye, eyebrow::Eyebrow,
                 eyelash::Eyelash, face::Face, hair::Hair,
@@ -177,10 +178,18 @@ mod tests {
     #[test]
     fn test_read_save_face_data() {
         let mut expected_face_data: Vec<u8> = Vec::new();
-        let initial_data = [
-            0xFF, 0xFF, 0xFF, 0xFF, 0x46, 0x41, 0x43, 0x45, 0x04, 0x00, 0x00, 0x00, 0x20, 0x01,
-            0x00, 0x00,
-        ];
+        let initial_data: [u8; 16] = MagicBytes::read(
+            &mut (BufReader::new(Cursor::new([
+                0xFF, 0xFF, 0xFF, 0xFF, 0x46, 0x41, 0x43, 0x45, 0x04, 0x00, 0x00, 0x00, 0x20, 0x01,
+                0x00, 0x00,
+            ]))),
+        )
+        .unwrap()
+        .data
+        .data
+        .try_into()
+        .expect("Could not convert to [u8; 16] from Vec<u8>");
+
         let face_model: [u8; 4] =
             Face::read(&mut (BufReader::new(Cursor::new([0x00, 0x00, 0x00, 0x00]))))
                 .unwrap()
@@ -221,11 +230,11 @@ mod tests {
                 .unwrap()
                 .data
                 .into();
+
         let apparent_age: [u8; 1] = ApparentAge::read(&mut (BufReader::new(Cursor::new([0xCD]))))
             .unwrap()
             .data
             .into();
-
         let facial_aesthetic: [u8; 1] =
             FacialAesthetic::read(&mut (BufReader::new(Cursor::new([0x6C]))))
                 .unwrap()
