@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["accessory","beard","decal","eye","eyebrow","eyelash","face","hair","model"]};

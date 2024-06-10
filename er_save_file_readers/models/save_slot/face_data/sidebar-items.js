@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["attributes","face_data","models","unk_288_bytes","unk_bool","unk_i16","unk_i32","unk_i64"]};

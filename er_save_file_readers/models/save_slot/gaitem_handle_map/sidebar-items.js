@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["gaitem_handle","gaitem_handle_map"]};

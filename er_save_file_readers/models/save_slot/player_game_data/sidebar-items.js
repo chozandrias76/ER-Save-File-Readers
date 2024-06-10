@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["base_max_fp","fp","health","max_base_health","max_fp","max_health","unk","unk1","unk2"]};

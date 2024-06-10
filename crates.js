@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["bumpalo","byteorder","cfg_if","er_save_file_readers","itoa","js_sys","log","main","once_cell","proc_macro2","quote","ryu","serde","serde_derive","serde_json","serde_wasm_bindgen","syn","unicode_ident","wasm_bindgen","wasm_bindgen_backend","wasm_bindgen_macro","wasm_bindgen_macro_support","wasm_bindgen_shared"];
