@@ -1,5 +1,9 @@
 use std::ops::{Deref, DerefMut};
 use super::attribute::Attribute;
+use std::{
+  io::{self, Read, Seek},
+  ops::{Deref, DerefMut},
+};
 
 pub struct FacialAesthetic {
   pub attribute: Attribute,
@@ -25,5 +29,13 @@ impl Deref for FacialAesthetic {
 impl DerefMut for FacialAesthetic {
   fn deref_mut(&mut self) -> &mut Self::Target {
       &mut self.attribute
+  }
+}
+
+impl BinaryReadable for FacialAesthetic {
+  fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
+      Ok(FacialAesthetic {
+          attribute: Attribute::read(reader)?,
+      })
   }
 }

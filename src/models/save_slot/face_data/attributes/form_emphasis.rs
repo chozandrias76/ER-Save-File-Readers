@@ -1,5 +1,9 @@
 use std::ops::{Deref, DerefMut};
 use super::attribute::Attribute;
+use std::{
+  io::{self, Read, Seek},
+  ops::{Deref, DerefMut},
+};
 
 pub struct FormEmphasis {
   pub attribute: Attribute,
@@ -25,5 +29,13 @@ impl Deref for FormEmphasis {
 impl DerefMut for FormEmphasis {
   fn deref_mut(&mut self) -> &mut Self::Target {
       &mut self.attribute
+  }
+}
+
+impl BinaryReadable for FormEmphasis {
+  fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
+      Ok(FormEmphasis {
+          attribute: Attribute::read(reader)?,
+      })
   }
 }
