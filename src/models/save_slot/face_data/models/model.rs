@@ -13,7 +13,7 @@ impl BinaryReadable for Model {
             data: {
                 let mut arr = [0; 4];
                 for (_i, item) in arr.iter_mut().enumerate() {
-                    *item = U8Reader::read(reader).unwrap().data;
+                    *item = U8Reader::read(reader).unwrap().data.0;
                 }
                 arr.into()
             },
@@ -24,7 +24,12 @@ impl BinaryReadable for Model {
 impl Default for Model {
     fn default() -> Self {
         Model {
-            data: [U8Reader::default().data; 4].into(),
+            data: (
+                U8Reader::default().data.0,
+                U8Reader::default().data.0,
+                U8Reader::default().data.0,
+                U8Reader::default().data.0,
+            ),
         }
     }
 }

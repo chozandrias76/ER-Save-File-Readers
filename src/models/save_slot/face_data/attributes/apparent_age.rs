@@ -1,10 +1,10 @@
 use crate::traits::binary_readable::BinaryReadable;
+
+use super::attribute::Attribute;
 use std::{
     io::{self, Read, Seek},
     ops::{Deref, DerefMut},
 };
-
-use super::attribute::Attribute;
 
 pub struct ApparentAge {
     pub attribute: Attribute,
