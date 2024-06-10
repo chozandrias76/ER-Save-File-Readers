@@ -3,10 +3,35 @@ use std::{
     io::{self, Read, Seek},
 };
 
-use crate::{models::shared::byte_array_reader::{ByteArray, ByteArrayReader}, traits::{binary_readable::BinaryReadable, validate::Validate}};
+use crate::{
+    models::shared::byte_array_reader::{ByteArray, ByteArrayReader},
+    traits::{binary_readable::BinaryReadable, validate::Validate},
+};
+
+use super::{
+    attributes::apparent_age::ApparentAge, models::{
+        accessory::Accessory, beard::Beard, decal::Decal, eye::Eye, eyebrow::Eyebrow,
+        eyelash::Eyelash, face::Face, hair::Hair,
+    }
+};
 
 pub struct FaceData {
     pub data: ByteArray,
+}
+
+pub struct FaceDatum {
+    pub datum: (
+        [u8; 16],
+        Face,
+        Hair,
+        Eye,
+        Eyebrow,
+        Beard,
+        Accessory,
+        Decal,
+        Eyelash,
+        ApparentAge,
+    ),
 }
 
 impl Default for FaceData {

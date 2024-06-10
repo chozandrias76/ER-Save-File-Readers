@@ -3,7 +3,7 @@ use std::{io::{Read, Seek}, ops::{Deref, DerefMut}};
 
 use crate::traits::binary_readable::BinaryReadable;
 
-use super::Model;
+use super::model::Model;
 
 #[derive(serde::Deserialize, serde::Serialize, Clone, Debug)]
 pub struct Eyebrow {

@@ -1,12 +1,3 @@
-pub mod accessory;
-pub mod beard;
-pub mod decal;
-pub mod eye;
-pub mod eyebrow;
-pub mod eyelash;
-pub mod face;
-pub mod hair;
-
 use std::io::{self, Read, Seek};
 
 use crate::{models::shared::u8_reader::U8Reader, traits::binary_readable::BinaryReadable};
