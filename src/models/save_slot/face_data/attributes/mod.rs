@@ -164,6 +164,7 @@ pub mod unimplemented11;
 pub mod unimplemented12;
 pub mod unimplemented2;
 pub mod unimplemented3;
+pub mod unimplemented4;
 pub mod unimplemented5;
 pub mod unimplemented6;
 pub mod unimplemented7;
