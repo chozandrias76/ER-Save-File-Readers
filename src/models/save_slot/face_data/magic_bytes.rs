@@ -49,9 +49,12 @@ impl fmt::Debug for MagicBytes {
 
 // Implement BinaryReadable trait for MagicBytes by forwarding to BoolReader
 impl BinaryReadable for MagicBytes {
-    fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-        Ok(MagicBytes {
-            data: ByteArray::read(reader, 16)?,
-        })
+    fn read<R: Read + Seek>(reader: &mut R) -> Result<Self, io::Error> {
+        match ByteArray::read(reader, 16) {
+            Ok(data) => Ok(Self {
+                data,
+            }),
+            Err(e) => Err(e),
+        }
     }
 }
