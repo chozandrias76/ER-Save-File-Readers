@@ -1,5 +1,3 @@
-pub mod attribute;
-
 pub mod accessories_color_b;
 pub mod accessories_color_g;
 pub mod accessories_color_r;

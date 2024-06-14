@@ -8,3 +8,5 @@ mod i16_macro;
 mod u8_macro;
 #[macro_use]
 mod byte_array_macro;
+#[macro_use]
+mod attribute_macro;

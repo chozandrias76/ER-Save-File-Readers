@@ -1,12 +1,13 @@
 #[macro_export]
 macro_rules! impl_u8_readable {
     ($name:ident) => {
+        use crate::models::shared::u8_reader::U8Reader;
+        use crate::BinaryReadable;
+        use std::io::{self, Read, Seek};
         use std::{
             fmt,
             ops::{Deref, DerefMut},
         };
-        use crate::models::shared::u8_reader::U8Reader;
-        use crate::BinaryReadable;
 
         type Reader = U8Reader;
 
@@ -48,10 +49,23 @@ macro_rules! impl_u8_readable {
 
         // Implement BinaryReadable trait for $name by forwarding to Reader
         impl BinaryReadable for $name {
-            fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-                Ok($name {
-                    data: Reader::read(reader)?,
-                })
+            fn read<R: Read + Seek>(reader: &mut R) -> Result<Self, io::Error> {
+                match Reader::read(reader) {
+                    Ok(data) => Ok($name { data }),
+                    Err(e) => Err(e),
+                }
+            }
+        }
+
+        #[cfg(test)]
+        mod tests {
+            use super::*;
+
+            #[test]
+            fn test_reading_gives_ok() {
+                let mut reader = std::io::Cursor::new(vec![0; 1]);
+                let result = $name::read(&mut reader);
+                assert!(result.is_ok());
             }
         }
     };
