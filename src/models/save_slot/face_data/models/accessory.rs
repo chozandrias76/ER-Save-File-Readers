@@ -1,7 +1,10 @@
 use std::io;
-use std::{io::{Read, Seek}, ops::{Deref, DerefMut}};
+use std::{
+    io::{Read, Seek},
+    ops::{Deref, DerefMut},
+};
 
-use crate::models::shared::byte_array_reader::ByteArrayReadable;
+use crate::traits::byte_array_readable::ByteArrayReadable;
 use crate::traits::binary_readable::BinaryReadable;
 
 use super::model::Model;
@@ -35,9 +38,9 @@ impl DerefMut for Accessory {
 }
 
 impl BinaryReadable for Accessory {
-  fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-    Ok(Accessory {
-      model: Model::read(reader)?,
-    })
-  }
+    fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
+        Ok(Accessory {
+            model: Model::read(reader)?,
+        })
+    }
 }

@@ -1,5 +1,6 @@
 use crate::{
-    models::shared::byte_array_reader::{ByteArray, ByteArrayReadable},
+    models::shared::byte_array_reader::ByteArray,
+    traits::byte_array_readable::ByteArrayReadable,
     traits::binary_readable::BinaryReadable,
 };
 

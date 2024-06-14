@@ -1,5 +1,6 @@
-use crate::models::shared::byte_array_reader::{ByteArray, ByteArrayReadable};
+use crate::models::shared::byte_array_reader::ByteArray;
 use crate::traits::binary_readable::BinaryReadable;
+use crate::traits::byte_array_readable::ByteArrayReadable;
 
 use std::{
     fmt,

@@ -4,15 +4,19 @@ use std::{
 };
 
 use crate::{
-    models::shared::byte_array_reader::{ByteArray, ByteArrayReadable},
-    traits::{binary_readable::BinaryReadable, validate::Validate},
+    models::shared::byte_array_reader::ByteArray,
+    traits::{
+        binary_readable::BinaryReadable, byte_array_readable::ByteArrayReadable, validate::Validate,
+    },
 };
 
 use super::{
-    attributes::apparent_age::ApparentAge, magic_bytes::MagicBytes, models::{
+    attributes::apparent_age::ApparentAge,
+    magic_bytes::MagicBytes,
+    models::{
         accessory::Accessory, beard::Beard, decal::Decal, eye::Eye, eyebrow::Eyebrow,
         eyelash::Eyelash, face::Face, hair::Hair,
-    }
+    },
 };
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]

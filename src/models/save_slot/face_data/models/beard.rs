@@ -1,7 +1,7 @@
 use std::io;
 use std::{io::{Read, Seek}, ops::{Deref, DerefMut}};
 
-use crate::models::shared::byte_array_reader::ByteArrayReadable;
+use crate::traits::byte_array_readable::ByteArrayReadable;
 use crate::traits::binary_readable::BinaryReadable;
 
 use super::model::Model;

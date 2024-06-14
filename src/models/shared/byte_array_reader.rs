@@ -1,12 +1,7 @@
 use std::{fmt, io::{self, Read, Seek}};
 
 use crate::traits::validate::Validate;
-
-pub trait ByteArrayReadable: Sized {
-    fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self>
-    where
-        Self: Sized;
-}
+use crate::traits::byte_array_readable::ByteArrayReadable;
 
 #[derive(Clone, serde::Deserialize, serde::Serialize)]
 pub struct ByteArray<const N: usize> {

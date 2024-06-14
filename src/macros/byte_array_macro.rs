@@ -7,7 +7,7 @@ macro_rules! impl_byte_array_readable {
         };
 
         use crate::traits::validate::Validate;
-        use crate::models::shared::byte_array_reader::ByteArrayReadable;
+        use crate::traits::byte_array_readable::ByteArrayReadable;
 
         type Reader<const N: usize> = ByteArray<N>;
 

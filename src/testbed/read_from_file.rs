@@ -25,7 +25,7 @@ mod read_from_file {
     mod save_slot {
         use std::{
             fs::File,
-            io::{self, BufReader, Read},
+            io::{self, BufReader},
         };
 
         use crate::traits::validate::Validate;

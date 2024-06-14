@@ -1,9 +1,6 @@
+use crate::traits::byte_array_readable::ByteArrayReadable;
+use crate::{models::shared::byte_array_reader::ByteArray, traits::validate::Validate};
 use std::io::{self, Read, Seek};
-
-use crate::{
-    models::shared::byte_array_reader::{ByteArray, ByteArrayReadable},
-    traits::validate::Validate,
-};
 
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
 pub struct Unk24Bytes {
