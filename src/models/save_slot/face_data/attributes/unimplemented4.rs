@@ -1,5 +1,5 @@
 use crate::{
-    models::shared::byte_array_reader::{ByteArray, ByteArrayReader},
+    models::shared::byte_array_reader::{ByteArray, ByteArrayReadable},
     traits::binary_readable::BinaryReadable,
 };
 
@@ -13,7 +13,7 @@ use std::{
  writable by the user.
  */
 pub struct Unimplemented4 {
-    pub attributes: ByteArray,
+    pub attributes: ByteArray<64>,
 }
 
 impl Default for Unimplemented4 {
@@ -21,7 +21,6 @@ impl Default for Unimplemented4 {
         Unimplemented4 {
             attributes: ByteArray {
                 data: [0; 64].to_vec(),
-                length: 64,
             },
         }
     }
@@ -29,7 +28,7 @@ impl Default for Unimplemented4 {
 
 // Implement Deref and DerefMut to delegate field access to ByteArray
 impl Deref for Unimplemented4 {
-    type Target = ByteArray;
+    type Target = ByteArray<64>;
 
     fn deref(&self) -> &Self::Target {
         &self.attributes
@@ -44,7 +43,7 @@ impl DerefMut for Unimplemented4 {
 
 impl BinaryReadable for Unimplemented4 {
     fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-        match ByteArray::read(reader, 64) {
+        match ByteArray::<64>::read(reader) {
             Ok(data) => Ok(Unimplemented4 {
                 attributes: data,
             }),

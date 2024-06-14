@@ -1,19 +1,18 @@
 use std::io::{self, Read, Seek};
 
 use crate::{
-    models::shared::byte_array_reader::{ByteArray, ByteArrayReader},
+    models::shared::byte_array_reader::{ByteArray, ByteArrayReadable},
     traits::validate::Validate,
 };
 
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]
 pub struct Unk24Bytes {
-    pub data: ByteArray,
+    pub data: ByteArray<24>,
 }
 
 impl Unk24Bytes {
     pub fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-        let byte_length = 24;
-        let data = ByteArray::read(reader, byte_length)?;
+        let data = ByteArray::<24>::read(reader)?;
         Ok(Unk24Bytes { data })
     }
 }

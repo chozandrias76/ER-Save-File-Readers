@@ -4,7 +4,7 @@ use std::{
 };
 
 use crate::{
-    models::shared::byte_array_reader::{ByteArray, ByteArrayReader},
+    models::shared::byte_array_reader::{ByteArray, ByteArrayReadable},
     traits::{binary_readable::BinaryReadable, validate::Validate},
 };
 
@@ -17,7 +17,7 @@ use super::{
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct FaceData {
-    pub data: ByteArray,
+    pub data: ByteArray<303>,
 }
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]
@@ -59,7 +59,7 @@ impl fmt::Debug for FaceData {
 impl BinaryReadable for FaceData {
     fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
         Ok(FaceData {
-            data: ByteArray::read(reader, 303)?,
+            data: ByteArray::<303>::read(reader)?,
         })
     }
 }

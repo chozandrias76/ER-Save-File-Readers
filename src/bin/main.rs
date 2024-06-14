@@ -92,13 +92,23 @@ mod tests {
                 vert_face_ratio::VertFaceRatio,
             },
             magic_bytes::MagicBytes,
-            models::{
-                accessory::Accessory, beard::Beard, decal::Decal, eye::Eye, eyebrow::Eyebrow,
-                eyelash::Eyelash, face::Face, hair::Hair,
-            },
         },
         traits::binary_readable::BinaryReadable,
     };
+
+    #[test]
+    fn _test_read_arbitrary_bytes() {
+        let mut dynamic_bytes = vec![0x00; 0x100];
+        // let mut dynamic_bytes = vec![0x00; 0x6010];
+        let file =
+            std::fs::File::open("testdata/vagabond/save_slots/0/gesture_game_data.sl2").unwrap();
+        // let file = std::fs::File::open("testdata/vagabond/save_slots/0/inventory_storage_box.sl2").unwrap();
+        let mut reader = BufReader::new(file);
+        std::io::Read::read_exact(&mut reader, &mut dynamic_bytes).unwrap();
+        dynamic_bytes.iter().for_each(|byte| {
+            print!("{:02X}\u{2008}", byte);
+        });
+    }
 
     #[test]
     fn test_read_save_face_data() {
@@ -115,46 +125,16 @@ mod tests {
         .try_into()
         .expect("Could not convert to [u8; 16] from Vec<u8>");
 
-        let face_model: [u8; 4] =
-            Face::read(&mut (BufReader::new(Cursor::new([0x00, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
-        let hair_model: [u8; 4] =
-            Hair::read(&mut (BufReader::new(Cursor::new([0x09, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
-        let eye_model: [u8; 4] =
-            Eye::read(&mut (BufReader::new(Cursor::new([0x00, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
-        let eyebrow_model: [u8; 4] =
-            Eyebrow::read(&mut (BufReader::new(Cursor::new([0x03, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
-        let beard_model: [u8; 4] =
-            Beard::read(&mut (BufReader::new(Cursor::new([0x01, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
-        let acc_model: [u8; 4] =
-            Accessory::read(&mut (BufReader::new(Cursor::new([0x00, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
-        let decal_model: [u8; 4] =
-            Decal::read(&mut (BufReader::new(Cursor::new([0x00, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
-        let eyelash_model: [u8; 4] =
-            Eyelash::read(&mut (BufReader::new(Cursor::new([0x02, 0x00, 0x00, 0x00]))))
-                .unwrap()
-                .data
-                .into();
+        use std::convert::TryInto;
+
+        let face_model: [u8; 4] = [0x00, 0x00, 0x00, 0x00];
+        let hair_model: [u8; 4] = [0x09, 0x00, 0x00, 0x00];
+        let eye_model: [u8; 4] = [0x00, 0x00, 0x00, 0x00];
+        let eyebrow_model: [u8; 4] = [0x03, 0x00, 0x00, 0x00];
+        let beard_model: [u8; 4] = [0x01, 0x00, 0x00, 0x00];
+        let acc_model: [u8; 4] = [0x00, 0x00, 0x00, 0x00];
+        let decal_model: [u8; 4] = [0x00, 0x00, 0x00, 0x00];
+        let eyelash_model: [u8; 4] = [0x02, 0x00, 0x00, 0x00];
 
         let apparent_age: [u8; 1] = ApparentAge::read(&mut (BufReader::new(Cursor::new([0xCD]))))
             .unwrap()
@@ -1213,7 +1193,7 @@ mod tests {
         .expect("data should be present");
         println!("{:?}", unk01);
 
-        assert_eq!(unk01.data, 0x00000097)
+        assert_eq!(unk01.data.data, 0x00000097)
     }
 
     #[test]

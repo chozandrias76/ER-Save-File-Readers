@@ -31,7 +31,6 @@ impl Default for SaveSlot {
             unk0x16: Unk24Bytes {
                 data: ByteArray {
                     data: vec![0u8; 0x18],
-                    length: 24,
                 },
             },
         }

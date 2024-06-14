@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! impl_u32_readable {
+macro_rules! impl_i16_readable {
     ($name:ident) => {
         use std::{
             fmt,
@@ -8,13 +8,12 @@ macro_rules! impl_u32_readable {
         };
 
         use crate::{
-            models::shared::u32_reader::U32Reader,
-            traits::binary_readable::BinaryReadable,
+            models::shared::i16_reader::I16Reader, traits::binary_readable::BinaryReadable,
         };
         use crate::traits::validate::Validate;
 
-        type Reader = U32Reader;
 
+        type Reader = I16Reader;
 
         #[derive(serde::Deserialize, serde::Serialize, Clone)]
         pub struct $name {
@@ -31,7 +30,7 @@ macro_rules! impl_u32_readable {
 
         // Implement Deref trait for $name
         impl Deref for $name {
-            type Target = U32Reader;
+            type Target = Reader;
 
             fn deref(&self) -> &Self::Target {
                 &self.data
@@ -45,14 +44,14 @@ macro_rules! impl_u32_readable {
             }
         }
 
-        // Implement Debug trait for $name by forwarding to U32Reader
+        // Implement Debug trait for $name by forwarding to Reader
         impl fmt::Debug for $name {
             fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 fmt::Debug::fmt(&self.data, f)
             }
         }
 
-        // Implement BinaryReadable trait for $name by forwarding to U32Reader
+        // Implement BinaryReadable trait for $name by forwarding to Reader
         impl BinaryReadable for $name {
             fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
                 Ok($name {

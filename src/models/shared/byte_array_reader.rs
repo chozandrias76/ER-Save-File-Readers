@@ -2,42 +2,40 @@ use std::{fmt, io::{self, Read, Seek}};
 
 use crate::traits::validate::Validate;
 
-pub trait ByteArrayReader {
-    fn read<R: Read + Seek>(reader: &mut R, length: usize) -> io::Result<Self>
+pub trait ByteArrayReadable: Sized {
+    fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self>
     where
         Self: Sized;
 }
 
 #[derive(Clone, serde::Deserialize, serde::Serialize)]
-pub struct ByteArray {
+pub struct ByteArray<const N: usize> {
     pub data: Vec<u8>,
-    pub length: usize,
 }
 
-impl Default for ByteArray {
+impl<const N: usize> Default for ByteArray<N> {
     fn default() -> Self {
         ByteArray {
-            data: Vec::new(),
-            length: 0,
+            data: vec![0x0; N]
         }
     }
 }
 
-impl ByteArrayReader for ByteArray {
-    fn read<R: Read + Seek>(reader: &mut R, length: usize) -> io::Result<Self> {
-        let mut data = vec![0u8; length];
+impl<const N: usize> ByteArrayReadable for ByteArray<N> where [(); N]: {
+    fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
+        let mut data = vec![0u8; N];
         reader.read_exact(&mut data)?;
-        Ok(ByteArray { data, length })
+        Ok(ByteArray { data })
     }
 }
 
-impl Validate for ByteArray {
+impl<const N: usize> Validate for ByteArray<N> {
     fn validate(&self) -> bool {
-        self.data.len() == self.length
+        self.data.len() == N
     }
 }
 
-impl fmt::Debug for ByteArray {
+impl<const N: usize> fmt::Debug for ByteArray<N> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "ByteArray(\n")?;
         for byte in &self.data {

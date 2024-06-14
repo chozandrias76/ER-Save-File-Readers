@@ -1,4 +1,4 @@
-use crate::models::shared::byte_array_reader::{ByteArray, ByteArrayReader};
+use crate::models::shared::byte_array_reader::{ByteArray, ByteArrayReadable};
 use crate::traits::binary_readable::BinaryReadable;
 
 use std::{
@@ -10,7 +10,7 @@ use std::{
 
 #[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct MagicBytes {
-    pub data: ByteArray,
+    pub data: ByteArray<16>,
 }
 
 impl Default for MagicBytes {
@@ -18,7 +18,6 @@ impl Default for MagicBytes {
         MagicBytes {
             data: ByteArray {
                 data: [0; 16].to_vec(),
-                length: 16,
             },
         }
     }
@@ -26,7 +25,7 @@ impl Default for MagicBytes {
 
 // Implement Deref trait for MagicBytes
 impl Deref for MagicBytes {
-    type Target = ByteArray;
+    type Target = ByteArray<16>;
 
     fn deref(&self) -> &Self::Target {
         &self.data
@@ -50,7 +49,7 @@ impl fmt::Debug for MagicBytes {
 // Implement BinaryReadable trait for MagicBytes by forwarding to BoolReader
 impl BinaryReadable for MagicBytes {
     fn read<R: Read + Seek>(reader: &mut R) -> Result<Self, io::Error> {
-        match ByteArray::read(reader, 16) {
+        match ByteArray::<16>::read(reader) {
             Ok(data) => Ok(Self {
                 data,
             }),
