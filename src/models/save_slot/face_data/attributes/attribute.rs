@@ -1,25 +1,21 @@
 use std::io::{self, Read, Seek};
 
-use crate::{models::shared::u8_reader::U8Reader, traits::binary_readable::BinaryReadable};
+use crate::impl_u8_readable;
 
-#[derive(serde::Deserialize, serde::Serialize, Clone, Debug)]
-pub struct Attribute {
-    pub data: (u8,),
-}
+impl_u8_readable!(Attribute);
 
-// Implement BinaryReadable trait for Attribute by forwarding to U8Reader
-impl BinaryReadable for Attribute {
-    fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-        Ok(Attribute {
-            data: U8Reader::read(reader)?.data,
-        })
-    }
-}
+#[cfg(test)]
+mod tests {
+    use io::Cursor;
 
-impl Default for Attribute {
-    fn default() -> Self {
-        Attribute {
-            data: U8Reader::default().data,
-        }
+    use super::*;
+
+    #[test]
+    fn test_can_read() {
+        let data = [0x0];
+        let mut reader = io::BufReader::new(Cursor::new(&data));
+
+        let attribute = Attribute::read(&mut reader);
+        assert_eq!(attribute.is_ok(), true);
     }
 }

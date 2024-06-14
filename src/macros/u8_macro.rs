@@ -3,14 +3,10 @@ macro_rules! impl_u8_readable {
     ($name:ident) => {
         use std::{
             fmt,
-            io::{self, Read, Seek},
             ops::{Deref, DerefMut},
         };
-
-        use crate::traits::validate::Validate;
-        use crate::{
-            models::shared::u8_reader::U8Reader, traits::binary_readable::BinaryReadable,
-        };
+        use crate::models::shared::u8_reader::U8Reader;
+        use crate::BinaryReadable;
 
         type Reader = U8Reader;
 
@@ -56,12 +52,6 @@ macro_rules! impl_u8_readable {
                 Ok($name {
                     data: Reader::read(reader)?,
                 })
-            }
-        }
-
-        impl Validate for $name {
-            fn validate(&self) -> bool {
-                self.data.validate()
             }
         }
     };
