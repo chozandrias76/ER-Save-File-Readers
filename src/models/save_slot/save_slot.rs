@@ -48,11 +48,12 @@ impl fmt::Debug for SaveSlot {
 impl BinaryReadable for SaveSlot {
     fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
         let checksum_data = &mut Self::default().checksum.data;
+        let mut checksum_data_clone = checksum_data.clone();
         reader
-            .read_exact(checksum_data)
+            .read_exact(&mut checksum_data_clone.data)
             .expect("checksum_data should be present");
         let mut instance = Self::default();
-        instance.checksum.data = *checksum_data;
+        instance.checksum.data = checksum_data_clone;
 
         Ok(instance)
     }

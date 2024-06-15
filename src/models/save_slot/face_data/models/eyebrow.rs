@@ -1,43 +1,10 @@
-use std::io;
-use std::{io::{Read, Seek}, ops::{Deref, DerefMut}};
+use crate::impl_model_readable;
 
-use crate::traits::byte_array_readable::ByteArrayReadable;
-use crate::traits::binary_readable::BinaryReadable;
+impl_model_readable!(Eyebrow);
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::impl_read_ok_and_err_test;
 
-use super::model::Model;
-
-#[derive(serde::Deserialize, serde::Serialize, Clone, Debug)]
-pub struct Eyebrow {
-    pub model: Model,
-}
-
-impl Default for Eyebrow {
-    fn default() -> Self {
-        Eyebrow {
-            model: Model::default(),
-        }
-    }
-}
-
-// Implement Deref and DerefMut to delegate field access to Model
-impl Deref for Eyebrow {
-    type Target = Model;
-
-    fn deref(&self) -> &Self::Target {
-        &self.model
-    }
-}
-
-impl DerefMut for Eyebrow {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.model
-    }
-}
-
-impl BinaryReadable for Eyebrow {
-  fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
-    Ok(Eyebrow {
-      model: Model::read(reader)?,
-    })
-  }
+    impl_read_ok_and_err_test!(Eyebrow, ok: vec![0; 4], err: vec![0; 3]);
 }

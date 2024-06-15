@@ -10,3 +10,9 @@ mod u8_macro;
 mod byte_array_macro;
 #[macro_use]
 mod attribute_macro;
+#[macro_use]
+mod model_macro;
+#[macro_use]
+mod binary_readable_macro;
+#[macro_use]
+mod read_ok_and_err_macro;

@@ -4,7 +4,7 @@ pub mod traits;
 pub mod macros;
 
 use models::save_slot::checksum::Checksum;
-use traits::binary_readable::BinaryReadable;
+use traits::{binary_readable::BinaryReadable, byte_array_readable::ByteArrayReadable};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]

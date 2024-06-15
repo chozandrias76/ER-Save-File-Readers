@@ -27,12 +27,14 @@ mod read_from_file {
             fs::File,
             io::{self, BufReader},
         };
+        
+        use crate::traits::byte_array_readable::ByteArrayReadable;
 
         use crate::traits::validate::Validate;
 
         impl crate::models::save_slot::face_data::face_data::FaceData {
             pub fn read_from_file(path: &str) -> io::Result<Self> {
-                use crate::traits::binary_readable::BinaryReadable;
+                use crate::traits::byte_array_readable::ByteArrayReadable;
     
                 let file = File::open(path)?;
                 let mut reader = BufReader::new(file);
@@ -49,8 +51,9 @@ mod read_from_file {
 
         impl crate::models::save_slot::checksum::Checksum {
             pub fn read_from_file(path: &str) -> io::Result<Self> {
-                let result =
-                    crate::testbed::read_from_file::read_from_file::read_from_file::<Self>(path);
+                let file = File::open(path)?;
+                let mut reader = BufReader::new(file);
+                let result = Self::read(&mut reader);
                 match result {
                     Ok(data) => {
                         assert_eq!(data.validate(), true, "Data validation failed");

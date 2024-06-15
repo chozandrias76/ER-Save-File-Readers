@@ -433,7 +433,7 @@ mod tests {
             )
             .expect("data should be present");
 
-        for (index, &val) in checksum_data.data.iter().enumerate() {
+        for (index, &val) in checksum_data.data.data.iter().enumerate() {
             assert_eq!(val, expected_checksum[index])
         }
     }
@@ -447,7 +447,7 @@ mod tests {
             .expect("data should be present");
         println!("{:?}", save_slot_data);
 
-        assert_eq!(save_slot_data.checksum.data[0], 10)
+        assert_eq!(save_slot_data.checksum.data.data[0], 10)
     }
 
     #[test]

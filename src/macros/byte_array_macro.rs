@@ -8,8 +8,8 @@ macro_rules! impl_byte_array_readable {
 
         use crate::traits::validate::Validate;
         use crate::traits::byte_array_readable::ByteArrayReadable;
-
-        type Reader<const N: usize> = ByteArray<N>;
+        
+        type Reader<const N: usize> = crate::models::shared::byte_array_reader::ByteArray<N>;
 
         #[derive(serde::Deserialize, serde::Serialize, Clone)]
         pub struct $name {
@@ -19,7 +19,7 @@ macro_rules! impl_byte_array_readable {
         impl Default for $name {
             fn default() -> Self {
                 $name {
-                    data: Reader::default(),
+                    data: Reader::<$size>::default(),
                 }
             }
         }
@@ -49,7 +49,7 @@ macro_rules! impl_byte_array_readable {
 
         // Implement BinaryReadable trait for $name by forwarding to Reader
         impl ByteArrayReadable for $name {
-            fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
+            fn read<R: std::io::Read + std::io::Seek>(reader: &mut R) -> Result<Self, std::io::Error> {
                 Ok($name {
                     data: Reader::<$size>::read(reader)?,
                 })
