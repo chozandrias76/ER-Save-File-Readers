@@ -31,12 +31,14 @@ impl fmt::Debug for U32Reader {
 impl BinaryReadable for U32Reader {
     fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
         let mutable_default = &mut [0u8; 4]; // Create a mutable reference to a [u8] slice
-        reader
-            .read_exact(mutable_default)
-            .expect("data should be present");
-        Ok(U32Reader {
-            data: u32::from_le_bytes(*mutable_default), // Convert the [u8] slice to u32
-        })
+        match reader
+            .read_exact(mutable_default) {
+                Ok(_) => Ok(U32Reader {
+                    data: u32::from_le_bytes(*mutable_default),
+                }),
+                Err(e) => return Err(e),
+            }
+        
     }
 }
 
