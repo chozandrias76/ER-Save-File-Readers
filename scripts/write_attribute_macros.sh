@@ -32,7 +32,7 @@ for file in "$directory"*.rs; do
     final_name="${title_case_name//_/}"
 
     # Prepare the new content
-    new_content=$(printf "use crate::impl_attribute;\n\nimpl_attribute!(%s);\n" "$final_name")
+    new_content=$(printf "use crate::impl_attribute;\n\nimpl_attribute!(%s);\n\nmod tests {\n  use super::*;\n  use crate::impl_read_ok_and_err_test;\n\n  impl_read_ok_and_err_test!(%s, ok: vec![1], err: vec![]);\n}" "$final_name" "$final_name")
 
     if $dry_run; then
         echo "Dry run: would update $file with:"
