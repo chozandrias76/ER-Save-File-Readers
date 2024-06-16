@@ -63,5 +63,11 @@ macro_rules! impl_i32_readable {
                 self.data.validate()
             }
         }
+
+        impl PartialEq for $name {
+            fn eq(&self, other: &Self) -> bool {
+                self.data == other.data
+            }
+        }
     };
 }
