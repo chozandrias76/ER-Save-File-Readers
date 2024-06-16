@@ -4,15 +4,15 @@ use crate::traits::{binary_readable::BinaryReadable, validate::Validate};
 
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize, PartialEq)]
 pub struct GAItemHandle {
-    pub ga_item_handle: i32,
+    pub ga_item: i32,
     pub item_id: i32,
 }
 
 impl Default for GAItemHandle {
     fn default() -> Self {
         GAItemHandle {
-            ga_item_handle: Default::default(),
-            item_id: Default::default(),
+            ga_item: i32::default(),
+            item_id: i32::default(),
         }
     }
 }
@@ -31,7 +31,7 @@ impl BinaryReadable for GAItemHandle {
         let item_id = i32::from_le_bytes(item_id_bytes);
 
         Ok(GAItemHandle {
-            ga_item_handle,
+            ga_item: ga_item_handle,
             item_id,
         })
     }
@@ -39,6 +39,6 @@ impl BinaryReadable for GAItemHandle {
 
 impl Validate for GAItemHandle {
     fn validate(&self) -> bool {
-        self.ga_item_handle.to_le_bytes().len() == 4 && self.item_id.to_le_bytes().len() == 4
+        self.ga_item.to_le_bytes().len() == 4 && self.item_id.to_le_bytes().len() == 4
     }
 }

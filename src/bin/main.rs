@@ -500,7 +500,7 @@ mod tests {
                 assert_eq!(
                     gaitem_handle_map.gaitem_handles[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
-                        ga_item_handle: 0x00000000,
+                        ga_item: 0x00000000,
                         item_id: 0xFFFFFFFFu32 as i32
                     },
                     "Failed at index {}",
@@ -510,7 +510,7 @@ mod tests {
                 assert_eq!(
                     gaitem_handle_map.gaitem_handles[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
-                        ga_item_handle: 0x00000000,
+                        ga_item: 0x00000000,
                         item_id: 0x00000000
                     },
                     "Failed at index {}",
@@ -520,7 +520,7 @@ mod tests {
                 assert_eq!(
                     gaitem_handle_map.gaitem_handles[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
-                        ga_item_handle: 0x00000000,
+                        ga_item: 0x00000000,
                         item_id: 0xFFFFFFFFu32 as i32
                     },
                     "Failed at index {}",
@@ -530,7 +530,7 @@ mod tests {
                 assert_eq!(
                     gaitem_handle_map.gaitem_handles[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
-                        ga_item_handle: 0x00000000,
+                        ga_item: 0x00000000,
                         item_id: 0x00000000
                     },
                     "Failed at index {}",
