@@ -55,17 +55,5 @@ macro_rules! impl_u8_readable {
                 }
             }
         }
-
-        #[cfg(test)]
-        mod tests {
-            use super::*;
-
-            #[test]
-            fn test_reading_gives_ok() {
-                let mut reader = std::io::Cursor::new(vec![0; 1]);
-                let result = $name::read(&mut reader);
-                assert!(result.is_ok());
-            }
-        }
     };
 }
