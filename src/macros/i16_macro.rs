@@ -8,12 +8,12 @@ macro_rules! impl_i16_readable {
         };
 
         use crate::{
-            models::shared::i16_reader::I16Reader, traits::binary_readable::BinaryReadable,
+            traits::binary_readable::BinaryReadable,
         };
         use crate::traits::validate::Validate;
 
 
-        type Reader = I16Reader;
+        type Reader = i16;
 
         #[derive(serde::Deserialize, serde::Serialize, Clone)]
         pub struct $name {
