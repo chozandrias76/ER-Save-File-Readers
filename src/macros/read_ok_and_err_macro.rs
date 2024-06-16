@@ -8,7 +8,7 @@ macro_rules! impl_read_ok_and_err_test {
             let data = $data_ok;
             let mut reader = Cursor::new(data);
             let result = $struct_name::read(&mut reader);
-            assert!(result.is_ok());
+            assert_eq!(result.is_ok(), true, "Result is not ok:\n\t{:?}", result);
         }
 
         #[test]
@@ -16,7 +16,7 @@ macro_rules! impl_read_ok_and_err_test {
             let data = $data_err;
             let mut reader = Cursor::new(data);
             let result = $struct_name::read(&mut reader);
-            assert!(result.is_err());
+            assert_eq!(result.is_err(), true, "Result is not err:\n\t{:?}", result);
         }
     };
 }
