@@ -1,7 +1,6 @@
 #[macro_export]
 macro_rules! impl_u8_readable {
     ($name:ident) => {
-        use crate::models::shared::u8_reader::U8Reader;
         use crate::BinaryReadable;
         use std::io::{self, Read, Seek};
         use std::{
@@ -9,7 +8,7 @@ macro_rules! impl_u8_readable {
             ops::{Deref, DerefMut},
         };
 
-        type Reader = U8Reader;
+        type Reader = u8;
 
         #[derive(serde::Deserialize, serde::Serialize, Clone)]
         pub struct $name {
