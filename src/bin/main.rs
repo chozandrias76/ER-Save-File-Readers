@@ -4,6 +4,8 @@ fn main() {}
 mod tests {
     use std::io::BufReader;
 
+    use er_save_file_readers::traits::binary_readable::BinaryReadable;
+
     #[test]
     fn _test_read_arbitrary_bytes() {
         let mut dynamic_bytes = vec![0x00; 0x100];
@@ -22,9 +24,9 @@ mod tests {
     fn test_read_save_face_data() {
         let mut expected_face_data: Vec<u8> = Vec::new();
         let initial_data: [u8; 16] = [
-                0xFF, 0xFF, 0xFF, 0xFF, 0x46, 0x41, 0x43, 0x45, 0x04, 0x00, 0x00, 0x00, 0x20, 0x01,
-                0x00, 0x00,
-            ];
+            0xFF, 0xFF, 0xFF, 0xFF, 0x46, 0x41, 0x43, 0x45, 0x04, 0x00, 0x00, 0x00, 0x20, 0x01,
+            0x00, 0x00,
+        ];
 
         let face_model: [u8; 4] = [0x00, 0x00, 0x00, 0x00];
         let hair_model: [u8; 4] = [0x09, 0x00, 0x00, 0x00];
@@ -492,13 +494,17 @@ mod tests {
 
     #[test]
     fn test_read_save_slot_ga_item_handle_map_bytes() {
-        let gaitem_handle_map =
-            er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle_map::GAItemHandleMap::read_from_file("testdata/vagabond/save_slots/0/gaitem_handle_map.sl2")
-                .expect("data should be present");
-        for idx in 0..gaitem_handle_map.gaitem_handles.len() {
+        let file = std::fs::File::open(
+            "testdata/vagabond/save_slots/0/gaitem_handle_map.sl2",
+        ).unwrap();
+        let gaitem_handle_map = Vec::<
+            er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle,
+        >::read(&mut BufReader::new(file))
+        .expect("data should be present");
+        for idx in 0..gaitem_handle_map.len() {
             if idx < 397 {
                 assert_eq!(
-                    gaitem_handle_map.gaitem_handles[idx],
+                    gaitem_handle_map[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
                         ga_item: er_save_file_readers::models::save_slot::gaitem_handle_map::ga_item::GaItem { data: 0x00000000 },
                         item_id: er_save_file_readers::models::save_slot::gaitem_handle_map::item_id::ItemId { data: 0xFFFFFFFFu32 as i32 }
@@ -508,7 +514,7 @@ mod tests {
                 )
             } else if idx < 400 && idx > 399 {
                 assert_eq!(
-                    gaitem_handle_map.gaitem_handles[idx],
+                    gaitem_handle_map[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
                         ga_item: er_save_file_readers::models::save_slot::gaitem_handle_map::ga_item::GaItem { data: 0x00000000 },
                         item_id: er_save_file_readers::models::save_slot::gaitem_handle_map::item_id::ItemId { data: 0x00000000 }
@@ -518,7 +524,7 @@ mod tests {
                 )
             } else if idx > 400 && idx < 419 {
                 assert_eq!(
-                    gaitem_handle_map.gaitem_handles[idx],
+                    gaitem_handle_map[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
                         ga_item: er_save_file_readers::models::save_slot::gaitem_handle_map::ga_item::GaItem { data: 0x00000000 },
                         item_id: er_save_file_readers::models::save_slot::gaitem_handle_map::item_id::ItemId { data: 0xFFFFFFFFu32 as i32 }
@@ -528,7 +534,7 @@ mod tests {
                 )
             } else if idx > 419 && idx < 421 {
                 assert_eq!(
-                    gaitem_handle_map.gaitem_handles[idx],
+                    gaitem_handle_map[idx],
                     er_save_file_readers::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
                         ga_item: er_save_file_readers::models::save_slot::gaitem_handle_map::ga_item::GaItem { data: 0x00000000 },
                         item_id: er_save_file_readers::models::save_slot::gaitem_handle_map::item_id::ItemId { data: 0x00000000 }

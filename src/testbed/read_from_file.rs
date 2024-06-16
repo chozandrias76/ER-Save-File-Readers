@@ -121,7 +121,7 @@ mod read_from_file {
             }
         }
 
-        impl crate::models::save_slot::gaitem_handle_map::gaitem_handle_map::GAItemHandleMap {
+        impl crate::models::save_slot::gaitem_handle_map::gaitem_handle::GAItemHandle {
             pub fn read_from_file(path: &str) -> io::Result<Self> {
                 let result =
                     crate::testbed::read_from_file::read_from_file::read_from_file::<Self>(path);

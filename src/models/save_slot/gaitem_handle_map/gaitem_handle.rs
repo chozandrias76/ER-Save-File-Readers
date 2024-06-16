@@ -40,3 +40,18 @@ impl Validate for GAItemHandle {
         self.ga_item.validate() && self.item_id.validate()
     }
 }
+
+
+impl BinaryReadable for Vec<GAItemHandle> {
+    fn read<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
+        let mut gaitem_handles = Vec::with_capacity(5120);
+
+        for idx in 0..gaitem_handles.len() {
+            println!("Reading GAItemHandleMap[{}]", idx);
+            let handle = GAItemHandle::read(reader)?;
+            gaitem_handles.push(handle);
+        }
+
+        Ok(gaitem_handles)
+    }
+}
