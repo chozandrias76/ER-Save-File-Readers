@@ -214,7 +214,7 @@ mod read_from_file {
                 }
             }
 
-            impl crate::models::save_slot::player_game_data::fp::FP {
+            impl crate::models::save_slot::player_game_data::fp::Fp {
                 pub fn read_from_file(path: &str) -> io::Result<Self> {
                     let result = crate::testbed::read_from_file::read_from_file::read_from_file::<
                         Self,
@@ -229,7 +229,7 @@ mod read_from_file {
                 }
             }
 
-            impl crate::models::save_slot::player_game_data::max_fp::MaxFP {
+            impl crate::models::save_slot::player_game_data::max_fp::MaxFp {
                 pub fn read_from_file(path: &str) -> io::Result<Self> {
                     let result = crate::testbed::read_from_file::read_from_file::read_from_file::<
                         Self,
@@ -244,7 +244,7 @@ mod read_from_file {
                 }
             }
 
-            impl crate::models::save_slot::player_game_data::base_max_fp::BaseMaxFP {
+            impl crate::models::save_slot::player_game_data::base_max_fp::BaseMaxFp {
                 pub fn read_from_file(path: &str) -> io::Result<Self> {
                     let result = crate::testbed::read_from_file::read_from_file::read_from_file::<
                         Self,

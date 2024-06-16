@@ -469,7 +469,7 @@ mod tests {
         .expect("data should be present");
         println!("{:?}", map_id);
 
-        assert_eq!(map_id.data, 0xA010000)
+        assert_eq!(map_id.data.data, 0xA010000)
     }
 
     #[test]
@@ -547,7 +547,7 @@ mod tests {
                 "testdata/vagabond/save_slots/0/player_game_data/unk.sl2",
             )
             .expect("data should be present");
-        assert_eq!(unk_bytes.data, 0xFFFFFFFFu32 as i32)
+        assert_eq!(unk_bytes.data.data, 0xFFFFFFFFu32 as i32)
     }
 
     #[test]
@@ -557,7 +557,7 @@ mod tests {
                 "testdata/vagabond/save_slots/0/player_game_data/unk1.sl2",
             )
             .expect("data should be present");
-        assert_eq!(unk1_bytes.data, 0x0i32)
+        assert_eq!(unk1_bytes.data.data, 0x0i32)
     }
 
     #[test]
@@ -565,7 +565,7 @@ mod tests {
         let bytes =
             er_save_file_readers::models::save_slot::player_game_data::health::Health::read_from_file("testdata/vagabond/save_slots/0/player_game_data/health.sl2")
                 .expect("data should be present");
-        assert_eq!(bytes.data, 0x20A)
+        assert_eq!(bytes.data.data, 0x20A)
     }
 
     #[test]
@@ -574,7 +574,7 @@ mod tests {
             "testdata/vagabond/save_slots/0/player_game_data/max_health.sl2",
         )
         .expect("data should be present");
-        assert_eq!(bytes.data, 0x20A)
+        assert_eq!(bytes.data.data, 0x20A)
     }
 
     #[test]
@@ -583,34 +583,34 @@ mod tests {
             "testdata/vagabond/save_slots/0/player_game_data/max_base_health.sl2",
         )
         .expect("data should be present");
-        assert_eq!(bytes.data, 0x20A)
+        assert_eq!(bytes.data.data, 0x20A)
     }
 
     #[test]
     fn test_read_save_slot_player_game_data_fp_bytes() {
         let bytes =
-            er_save_file_readers::models::save_slot::player_game_data::fp::FP::read_from_file(
+            er_save_file_readers::models::save_slot::player_game_data::fp::Fp::read_from_file(
                 "testdata/vagabond/save_slots/0/player_game_data/fp.sl2",
             )
             .expect("data should be present");
-        assert_eq!(bytes.data, 0x4E)
+        assert_eq!(bytes.data.data, 0x4E)
     }
 
     #[test]
     fn test_read_save_slot_player_game_data_max_fp_bytes() {
         let bytes =
-            er_save_file_readers::models::save_slot::player_game_data::max_fp::MaxFP::read_from_file("testdata/vagabond/save_slots/0/player_game_data/max_fp.sl2")
+            er_save_file_readers::models::save_slot::player_game_data::max_fp::MaxFp::read_from_file("testdata/vagabond/save_slots/0/player_game_data/max_fp.sl2")
                 .expect("data should be present");
-        assert_eq!(bytes.data, 0x4E)
+        assert_eq!(bytes.data.data, 0x4E)
     }
 
     #[test]
     fn test_read_save_slot_player_game_data_max_base_fp_bytes() {
-        let bytes = er_save_file_readers::models::save_slot::player_game_data::base_max_fp::BaseMaxFP::read_from_file(
+        let bytes = er_save_file_readers::models::save_slot::player_game_data::base_max_fp::BaseMaxFp::read_from_file(
             "testdata/vagabond/save_slots/0/player_game_data/base_max_fp.sl2",
         )
         .expect("data should be present");
-        assert_eq!(bytes.data, 0x4E)
+        assert_eq!(bytes.data.data, 0x4E)
     }
 
     #[test]
@@ -620,6 +620,6 @@ mod tests {
                 "testdata/vagabond/save_slots/0/player_game_data/unk2.sl2",
             )
             .expect("data should be present");
-        assert_eq!(bytes.data, 0x0)
+        assert_eq!(bytes.data.data, 0x0)
     }
 }
